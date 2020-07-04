@@ -1,0 +1,86 @@
+# MAN:SC
+:author: Alphastrick
+:toc:
+:sectnums:
+
+## Introdution
+
+The MAN:SC (MetArt-Network Scraper / Crawler) scrapes data from MAN-Pages.
+
+## Features
+
+- *Media Scraping*
+    * [x] Model
+    * [x] Gallery
+    * [x] Movie
+    * [x] Update
+- *Media Crawling*
+    * [ ] Model with Qualified Galleries
+    * [ ] Model Relations
+    * [ ] Using MetArt's search 
+- *Data Export*
+    * [x] JSON
+    * [x] CSV
+
+## Architecture
+
+[plantuml,arch,svg]
+----
+
+skinparam componentStyle uml2
+
+package "mansc" as mansc {
+
+    package "types" as types {
+        rectangle "Model" as t_model
+        rectangle "Media" as t_media
+        rectangle "Gallery" as t_gallery
+        rectangle "Movie" as t_movie
+        t_media <|-- t_gallery
+        t_media <|-- t_movie
+    }
+
+    component "urlbuilder" as urlbuilder
+
+    package "scraper" as scraper {
+        rectangle "Page" as page
+        rectangle "ModelPage" as modelpage
+        rectangle "GalleryPage" as gallerypage
+        rectangle "MoviePage" as moviepage
+        rectangle "UpdatePage" as updatepage
+        page <-- modelpage
+        page <-- moviepage
+        page <-- gallerypage
+        page <-- updatepage
+    }
+
+    package "storage" as storage {
+
+        rectangle "CSVEngine" as csv
+        rectangle "JSONEngine" as json
+
+    }
+
+}
+
+----
+
+## Interface
+
+### CLI
+
+.CLI Example 1: Scraping model information
+[shell]
+----
+python3 mansc.py --Result csv --source MetArtX model "Michelle H"
+----
+
+Scraping information about _Michelle H_ from _MetArtX_ and writes it as _csv_ to stdout
+
+.CLI Example 2: Scraping gallery information
+[shell]
+----
+python3 mansc.py --Result json media -o "gallery" -m "Michelle H" -m "Patritcy A" -t "Maldezi" -d "2016-12-21"
+----
+
+Scraping information from _MetArt_ about _Michelle H_'s _Patritcy A_ and  gallery _Maldezi_ and writes it as _json_ to stdout

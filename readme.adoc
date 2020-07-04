@@ -1,0 +1,16 @@
+= MAN::SC
+
+This project scrapes the MetArt-Network.
+
+Required Libraries:
+
+[cols="1"]
+|===
+
+| Beautiful Soup 4
+
+|===
+
+link:/doc/documentation.adoc[Documentation]
+
+&copy; Alphastrick 2020
