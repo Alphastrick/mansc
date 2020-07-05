@@ -2,12 +2,15 @@
 
 This project scrapes the MetArt-Network.
 
-Required Libraries:
-
-[cols="1"]
+.Dependencies
+[cols="3,1",options="header"]
 |===
 
+| Library
+| Version
+
 | Beautiful Soup 4
+| 4.9.1
 
 |===
 

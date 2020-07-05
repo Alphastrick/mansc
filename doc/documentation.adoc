@@ -1,5 +1,8 @@
 # MAN:SC
+:kroki-fetch-diagram:
+:imagesdir: media
 :author: Alphastrick
+:source-highlighter: rouge
 :toc:
 :sectnums:
 
@@ -14,19 +17,23 @@ The MAN:SC (MetArt-Network Scraper / Crawler) scrapes data from MAN-Pages.
     * [x] Gallery
     * [x] Movie
     * [x] Update
+    * [ ] Blog Posts
+    * [ ] Full Media Download (with credentials)
 - *Media Crawling*
     * [ ] Model with Qualified Galleries
     * [ ] Model Relations
     * [ ] Using MetArt's search 
+    * [ ] Top X Model
+    * [ ] Top X Media
 - *Data Export*
-    * [x] JSON
-    * [x] CSV
+    * StdOut
+        ** [x] JSON
+        ** [x] CSV
 
-## Architecture
+## Module Architecture
 
 [plantuml,arch,svg]
 ----
-
 skinparam componentStyle uml2
 
 package "mansc" as mansc {
@@ -62,10 +69,9 @@ package "mansc" as mansc {
     }
 
 }
-
 ----
 
-## Interface
+## Usage
 
 ### CLI
 
@@ -83,4 +89,46 @@ Scraping information about _Michelle H_ from _MetArtX_ and writes it as _csv_ to
 python3 mansc.py --Result json media -o "gallery" -m "Michelle H" -m "Patritcy A" -t "Maldezi" -d "2016-12-21"
 ----
 
-Scraping information from _MetArt_ about _Michelle H_'s _Patritcy A_ and  gallery _Maldezi_ and writes it as _json_ to stdout
+Scraping information from _MetArt_ about _Michelle H_'s and _Patritcy A_'s and  gallery _Maldezi_ and writes it as _json_ to _stdout_.
+
+### Module
+
+If the included CLI interface of the scraper does not fit your requirements,
+building a custom solution may does the job.
+
+The module usage is straight forward and demonstrated on the scraping
+of _Michelle H_'s data.
+
+Before scraping the data, it's necessary to provide a valid url.
+The module provides a simple solution to build the MAN urls.
+In order to fetch model information, use the `urlbuilder.BuildModelUrl` function.
+
+[python]
+----
+url = urlbuilder.BuildModelUrl(types.Source.MetArt, model="Michelle H")
+----
+
+There are also functions for galleries, movies, models, and updates.
+
+The data itself is loaded by the `Page` object,
+
+[python]
+----
+page = scraper.Page(url)
+----
+
+which is the argument to every scraper.
+
+[python]
+----
+modelScraper = scraper.ModelScraper(page)
+----
+
+Now, the data is ready for further processing by accessing
+it:
+
+[python]
+----
+print(modelScraper.Model)
+----
+

@@ -69,7 +69,7 @@ class _MovieParser:
         for _ in jsonObject["tags"]:
             movie.AddTag(_)
         for _ in jsonObject["models"]:
-            movie.AddModel(_ModelParser.ParseObject(_), int(_["publishAge"]))
+            movie.AddModel(_ModelParser.ParseObjectMin(_), int(_["publishAge"]))
         return movie
 
     def ParseObjectMin(jsonObject: dict) -> types.Movie:

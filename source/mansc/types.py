@@ -123,7 +123,8 @@ class Model:
                 "Haircolor: {haircolor}\n" + \
                 "Weight   : {weight}\n" + \
                 "Height   : {height}\n" + \
-                "Origin   : {origin} Ethnic: {ethnic}\n"
+                "Origin   : {origin}\n" + \
+                "Ethnic   : {ethnic}\n"
             ).format(
                 name=self.Name,
                 bio=self.Bio,
